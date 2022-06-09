@@ -9,6 +9,7 @@ for _ in range(3):
         from selenium.webdriver.common.by import By
         from selenium.webdriver.support.ui import WebDriverWait
         from selenium.webdriver.support import expected_conditions as EC
+        from selenium.webdriver.chrome.service import Service
         from webdriver_manager.chrome import ChromeDriverManager
         import undetected_chromedriver as uc
         break
@@ -46,7 +47,7 @@ if not current_account:
 
 log.info(f"Using account:\nLOGIN_METHOD:{current_account['method']}\nACCOUNT_ID:{current_account['account_info']['id']}\nACCOUNT_PW:{current_account['account_info']['password']}")
 
-driver = uc.Chrome(ChromeDriverManager().install())
+driver = uc.Chrome(service=Service(ChromeDriverManager().install()))
 
 driver.get(initial)
 

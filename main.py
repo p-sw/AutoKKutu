@@ -43,7 +43,7 @@ if not current_account:
     log.error("No account is available. If you want to use account, please set use to true.")
     sys.exit(1)
 
-log.info(f"Using account:\nLOGIN_METHOD:{current_account['method']}\nACCOUNT_ID:{current_account['account_info']['id']}\nACCOUNT_PW:{current_account['account_info']['pw']}")
+log.info(f"Using account:\nLOGIN_METHOD:{current_account['method']}\nACCOUNT_ID:{current_account['account_info']['id']}\nACCOUNT_PW:{current_account['account_info']['password']}")
 
 driver = webdriver.Chrome(ChromeDriverManager().install())
 

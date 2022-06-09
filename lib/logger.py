@@ -24,19 +24,19 @@ class Logger():
         os.fsync(self.log_file.fileno())
 
     def success(self, text):
-        self.write_log({datetime.now().strftime("%Y-%m-%d %H:%M:%S")} + ' (SUCCESS) ' + text)
+        self.write_log(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' (SUCCESS) ' + text)
         print(f'{self.pref}{LevelStyles.success_color}' + text + self.reset)
 
     def info(self, text):
-        self.write_log({datetime.now().strftime("%Y-%m-%d %H:%M:%S")} + ' (INFO) ' + text)
+        self.write_log(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' (INFO) ' + text)
         print(f'{self.pref}{LevelStyles.info_color}' + text + self.reset)
     
     def warning(self, text):
-        self.write_log({datetime.now().strftime("%Y-%m-%d %H:%M:%S")} + ' (WARNING) ' + text)
+        self.write_log(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' (WARNING) ' + text)
         print(f'{self.pref}{LevelStyles.warning_color}' + text + self.reset)
     
     def error(self, text):
-        self.write_log({datetime.now().strftime("%Y-%m-%d %H:%M:%S")} + ' (ERROR) ' + text)
+        self.write_log(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' (ERROR) ' + text)
         print(f'{self.pref}{LevelStyles.error_color}' + text + self.reset)
 
 if __name__ == "__main__":

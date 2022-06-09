@@ -6,11 +6,11 @@ log = Logger()
 
 for _ in range(3):
     try:
-        from selenium import webdriver
         from selenium.webdriver.common.by import By
         from selenium.webdriver.support.ui import WebDriverWait
         from selenium.webdriver.support import expected_conditions as EC
         from webdriver_manager.chrome import ChromeDriverManager
+        import undetected_chromedriver as uc
         break
     except ImportError:
         log.warning('Required modules not found.')
@@ -45,7 +45,7 @@ if not current_account:
 
 log.info(f"Using account:\nLOGIN_METHOD:{current_account['method']}\nACCOUNT_ID:{current_account['account_info']['id']}\nACCOUNT_PW:{current_account['account_info']['password']}")
 
-driver = webdriver.Chrome(ChromeDriverManager().install())
+driver = uc.Chrome(ChromeDriverManager().install())
 
 driver.get(initial)
 

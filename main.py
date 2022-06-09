@@ -16,8 +16,8 @@ for _ in range(3):
         log.warning('Required modules not found.')
         log.info('Installing..')
         import pip
-        pip.main(['install', 'wheel'])
-        pip.main(['install', '-r', 'requirements.txt'])
+        pip.main(['install', '--disable-pip-version-check', 'wheel'])
+        pip.main(['install', '--disable-pip-version-check', '-r', 'requirements.txt'])
         log.success('Successfully installed all modules.')
         log.info('Retrying imports..')
 log.success('Successfully imported all modules.')

@@ -25,11 +25,11 @@ log.success('Successfully imported all modules.')
 initial = "https://kkutu.co.kr/o/login/"
 current_account = None
 
-with open("account.config", "r", encoding="utf-8") as f:
+with open("account.cfg", "r", encoding="utf-8") as f:
     accountConfig = json.load(f)
     log.success('Successfully loaded account config.')
 
-with open("global.config", "r", encoding="utf-8") as f:
+with open("global.cfg", "r", encoding="utf-8") as f:
     globalConfig = json.load(f)
     log.success('Successfully loaded global config.')
 

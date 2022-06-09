@@ -1,6 +1,8 @@
 from datetime import datetime
 import os
 
+os.system("color")
+
 class LevelStyles():
     ## 1 if bold else 0;color
     info_color = "0;37m"

@@ -55,42 +55,42 @@ match current_account['method']:
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "email"))
         )
-        driver.find_element_by_id("email").send_keys(current_account['account_info']['id'])
-        driver.find_element_by_id("pass").send_keys(current_account['account_info']['password'])
-        driver.find_element_by_id("loginbutton").click()
+        driver.find_element(By.ID, "email").send_keys(current_account['account_info']['id'])
+        driver.find_element(By.ID, "pass").send_keys(current_account['account_info']['password'])
+        driver.find_element(By.ID, "loginbutton").click()
     case "naver":
         log.info('Using naver login method.')
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "id"))
         )
-        driver.find_element_by_id("id").send_keys(current_account['account_info']['id'])
-        driver.find_element_by_id("pw").send_keys(current_account['account_info']['password'])
-        driver.find_element_by_id("log.login").click()
+        driver.find_element(By.ID, "id").send_keys(current_account['account_info']['id'])
+        driver.find_element(By.ID, "pw").send_keys(current_account['account_info']['password'])
+        driver.find_element(By.ID, "log.login").click()
     case "google":
         log.info('Using google login method.')
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "identifierId"))
         )
-        driver.find_element_by_id("identifierId").send_keys(current_account['account_info']['id'])
-        driver.find_element_by_id("identifierNext").click()
+        driver.find_element(By.ID, "identifierId").send_keys(current_account['account_info']['id'])
+        driver.find_element(By.ID, "identifierNext").click()
         driver.find_element_by_name("password").send_keys(current_account['account_info']['password'])
-        driver.find_element_by_id("passwordNext").click()
+        driver.find_element(By.ID, "passwordNext").click()
     case "kakao":
         log.info('Using kakao login method.')
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "id_email_2"))
         )
-        driver.find_element_by_id("id_email_2").send_keys(current_account['account_info']['id'])
-        driver.find_element_by_id("id_password_3").send_keys(current_account['account_info']['password'])
+        driver.find_element(By.ID, "id_email_2").send_keys(current_account['account_info']['id'])
+        driver.find_element(By.ID, "id_password_3").send_keys(current_account['account_info']['password'])
         driver.find_element_by_xpath('//*[@id="login-form"]/fieldset/div[8]/button[1]').click()
     case "twitter":
         log.info('Using twitter login method.')
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "username_or_email"))
         )
-        driver.find_element_by_id("username_or_email").send_keys(current_account['account_info']['id'])
-        driver.find_element_by_id("password").send_keys(current_account['account_info']['password'])
-        driver.find_element_by_id("allow").click()
+        driver.find_element(By.ID, "username_or_email").send_keys(current_account['account_info']['id'])
+        driver.find_element(By.ID, "password").send_keys(current_account['account_info']['password'])
+        driver.find_element(By.ID, "allow").click()
 log.info('Successfully logged in.')
     
 WebDriverWait(driver, 10).until(

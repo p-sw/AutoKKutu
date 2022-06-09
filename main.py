@@ -73,6 +73,9 @@ match current_account['method']:
         )
         driver.find_element(By.ID, "identifierId").send_keys(current_account['account_info']['id'])
         driver.find_element(By.ID, "identifierNext").click()
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.NAME, "password"))
+        )
         driver.find_element_by_name("password").send_keys(current_account['account_info']['password'])
         driver.find_element(By.ID, "passwordNext").click()
     case "kakao":

@@ -2,15 +2,18 @@ import json
 import sys
 
 from lib.logger import Logger
+from lib.utils import DriverWrapper
 log = Logger()
 
 for _ in range(3):
     try:
+        import pyperclip
         from selenium import webdriver
         from selenium.webdriver.common.by import By
         from selenium.webdriver.support.ui import WebDriverWait
         from selenium.webdriver.support import expected_conditions as EC
         from selenium.webdriver.chrome.service import Service
+        from selenium.webdriver.common.keys import Keys
         from webdriver_manager.chrome import ChromeDriverManager
         break
     except ImportError:
@@ -47,7 +50,10 @@ if not current_account:
 
 log.info(f"Using account:\nLOGIN_METHOD:{current_account['method']}\nACCOUNT_ID:{current_account['account_info']['id']}\nACCOUNT_PW:{current_account['account_info']['password']}")
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+options = webdriver.ChromeOptions()
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+driver_wrapper = DriverWrapper(driver)
 
 driver.get(initial)
 
@@ -57,16 +63,18 @@ match current_account['method']:
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "email"))
         )
-        driver.find_element(By.ID, "email").send_keys(current_account['account_info']['id'])
-        driver.find_element(By.ID, "pass").send_keys(current_account['account_info']['password'])
+        driver_wrapper.send_keys_delay(driver.find_element(By.ID, "email"), current_account['account_info']['id'])
+        driver_wrapper.send_keys_delay(driver.find_element(By.ID, "pass"), current_account['account_info']['password'])
         driver.find_element(By.ID, "loginbutton").click()
     case "naver":
         log.info('Using naver login method.')
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "id"))
         )
-        driver.find_element(By.ID, "id").send_keys(current_account['account_info']['id'])
-        driver.find_element(By.ID, "pw").send_keys(current_account['account_info']['password'])
+        pyperclip.copy(current_account['account_info']['id'])
+        driver.find_element(By.ID, "id").send_keys(Keys.CONTROL, "v")
+        pyperclip.copy(current_account['account_info']['password'])
+        driver.find_element(By.ID, "pw").send_keys(Keys.CONTROL, "v")
         driver.find_element(By.ID, "log.login").click()
     case "google":
         # log.info('Using google login method.')
@@ -87,16 +95,16 @@ match current_account['method']:
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "id_email_2"))
         )
-        driver.find_element(By.ID, "id_email_2").send_keys(current_account['account_info']['id'])
-        driver.find_element(By.ID, "id_password_3").send_keys(current_account['account_info']['password'])
+        driver_wrapper.send_keys_delay(driver.find_element(By.ID, "id_email_2"), current_account['account_info']['id'])
+        driver_wrapper.send_keys_delay(driver.find_element(By.ID, "id_password_3"), current_account['account_info']['password'])
         driver.find_element_by_xpath('//*[@id="login-form"]/fieldset/div[8]/button[1]').click()
     case "twitter":
         log.info('Using twitter login method.')
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "username_or_email"))
         )
-        driver.find_element(By.ID, "username_or_email").send_keys(current_account['account_info']['id'])
-        driver.find_element(By.ID, "password").send_keys(current_account['account_info']['password'])
+        driver_wrapper.send_keys_delay(driver.find_element(By.ID, "username_or_email"), current_account['account_info']['id'])
+        driver_wrapper.send_keys_delay(driver.find_element(By.ID, "password"), current_account['account_info']['password'])
         driver.find_element(By.ID, "allow").click()
 log.info('Successfully logged in.')
     

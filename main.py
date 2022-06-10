@@ -69,17 +69,19 @@ match current_account['method']:
         driver.find_element(By.ID, "pw").send_keys(current_account['account_info']['password'])
         driver.find_element(By.ID, "log.login").click()
     case "google":
-        log.info('Using google login method.')
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, "identifierId"))
-        )
-        driver.find_element(By.ID, "identifierId").send_keys(current_account['account_info']['id'])
-        driver.find_element(By.ID, "identifierNext").click()
-        WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.NAME, "password"))
-        )
-        driver.find_element_by_name("password").send_keys(current_account['account_info']['password'])
-        driver.find_element(By.ID, "passwordNext").click()
+        # log.info('Using google login method.')
+        # WebDriverWait(driver, 10).until(
+        #     EC.presence_of_element_located((By.ID, "identifierId"))
+        # )
+        # driver.find_element(By.ID, "identifierId").send_keys(current_account['account_info']['id'])
+        # driver.find_element(By.ID, "identifierNext").click()
+        # WebDriverWait(driver, 10).until(
+        #     EC.presence_of_element_located((By.NAME, "password"))
+        # )
+        # driver.find_element_by_name("password").send_keys(current_account['account_info']['password'])
+        # driver.find_element(By.ID, "passwordNext").click()
+        log.error('Google login method is not supported.')
+        sys.exit(1)
     case "kakao":
         log.info('Using kakao login method.')
         WebDriverWait(driver, 10).until(

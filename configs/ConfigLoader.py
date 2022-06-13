@@ -16,6 +16,7 @@ class Statics: # DO NOT EDIT THIS VALUES
     INGAME_USERNAME_CSS_NAME = 'game-user-name'
     GAME_CHAT_CSS_SELECTOR = '#ChatBox div.product-body input'
     GAME_WORD_DISPLAY_CSS_NAME = 'jjo-display'
+    INGAME_HISTORY_ITEM_CSS_NAME = 'history-item'
 
 
 class Config:

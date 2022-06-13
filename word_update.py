@@ -9,7 +9,7 @@ JAMO_END_LETTER = 55203
 
 db = sqlite3.connect('word.db')
 cursor = db.cursor()
-cursor.execute('CREATE TABLE IF NOT EXISTS stdict (word TEXT, length INTEGER)')
+cursor.execute('CREATE TABLE IF NOT EXISTS stdict (word TEXT, length INTEGER, UNIQUE(word))')
 
 APIKEY = os.environ.get("STDICT_APIKEY")
 for charint in range(JAMO_START_LETTER, JAMO_END_LETTER+1):
@@ -45,7 +45,7 @@ for charint in range(JAMO_START_LETTER, JAMO_END_LETTER+1):
 
         for item in content['channel']['item']:
             word = item['word']
-            word = word.replace('-', '')
+            word = word.replace('-', '').replace('ㆍ', '')
             length = len(word)
             if word in history:
                 continue

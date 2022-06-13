@@ -42,7 +42,6 @@ def flatdict(target, parentpath:list=None) -> dict:
         if isinstance(value, dict):
             result = sum_dict(result, flatdict(value, return_append(parentpath, key)))
         else:
-            print(key, value, parentpath)
             addline(value, return_append(parentpath, key))
     return result
 

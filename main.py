@@ -158,7 +158,7 @@ def wait_loop():
 def game_loop(**kwargs):
     username = kwargs['username']
     WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, static.INGAME_USER_CSS_NAME))
+        EC.presence_of_element_located((By.CSS_NAME, static.INGAME_USER_CSS_NAME))
     )
     users = driver.find_elements(By.CLASS_NAME, static.INGAME_USER_CSS_NAME)
     while True:

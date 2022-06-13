@@ -19,7 +19,7 @@ class Logger():
         if not file_path:
             self.file_path = f"logs/{datetime.now().strftime('%m%d%H%M%S')}.log"
         self.log_file = open(self.file_path, "w", encoding="utf-8")
-    
+
     def write_log(self, text):
         self.log_file.write(text + "\n")
         self.log_file.flush()
@@ -36,13 +36,13 @@ class Logger():
         format_str = f"{nowtime} (INFO) : {text}"
         self.write_log(format_str)
         print(f'{self.pref}{LevelStyles.info_color}{format_str}{self.reset}')
-    
+
     def warning(self, text):
         nowtime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         format_str = f"{nowtime} (WARNING) : {text}"
         self.write_log(format_str)
         print(f'{self.pref}{LevelStyles.warning_color}{format_str}{self.reset}')
-    
+
     def error(self, text):
         nowtime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         format_str = f"{nowtime} (ERROR) : {text}"

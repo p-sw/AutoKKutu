@@ -5,7 +5,7 @@ from copy import deepcopy
 class DriverWrapper:
     def __init__(self, driver_obj):
         self.driver = driver_obj
-    
+
     def send_keys_delay(self, element, *values, delay_ms=200, random=True):
         for value in values:
             for key in value:
@@ -31,7 +31,7 @@ def sum_dict(dicta, dictb):
         if key not in result:
             result[key] = value
     return result
-    
+
 def flatdict(target, parentpath:list=None) -> dict:
     if not parentpath:
         parentpath = []

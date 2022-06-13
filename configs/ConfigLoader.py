@@ -46,11 +46,11 @@ class Config:
                     'delay_random': True
                 }
             }
-        
+
         self.log.success('Configs successfully loaded.')
         for key, value in flatdict(self.config):
             self.log.info(f'{key}\t:\t{value}')
-    
+
     def get(self, dictpath: str = None):
         if not dictpath:
             return self.config
@@ -58,13 +58,13 @@ class Config:
         for key in dictpath.split('.'):
             result_config = result_config[key]
         return result_config
-    
+
     def set(self, dictpath: str, value: any):
         result_config = self.config
         for key in dictpath.split('.')[:-1]:
             result_config = result_config[key]
         result_config[dictpath.split('.')[-1]] = value
-    
+
     def check_config_format(self, form, default_form_path:str=None):
         default_form = self.default_form
         if default_form_path:

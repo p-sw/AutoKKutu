@@ -136,12 +136,6 @@ WebDriverWait(driver, 10).until(
 )
 driver.get(f"{static.GAME_MAIN_ENTRY_POINT}{globalConfig['game']['server']}")
 
-# *** Globals *** #
-
-username = ""
-
-# *************** #
-
 def wait_loop():
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, static.OUTGAME_USERNAME_CSS_SELECTOR))
@@ -153,10 +147,10 @@ def wait_loop():
             log.info('Game is not ready. Waiting..')
             time.sleep(1)
             continue
-        game_loop()
+        game_loop(username=username)
 
-def game_loop():
-#     global username
+def game_loop(**kwargs):
+    username = kwargs['username']
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, static.INGAME_USER_CSS_NAME))
     )

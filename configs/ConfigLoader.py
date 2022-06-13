@@ -48,8 +48,8 @@ class Config:
         if not path.exists('config.json') or not self.config:  # Setting default configurations
             self.config = {  # DO NOT EDIT THIS VALUES
                 'typing': {
-                    'delay_min': 0.01,
-                    'delay_max': 0.1,
+                    'delay_min': 10,
+                    'delay_max': 100,
                     'delay_random': True
                 }
             }

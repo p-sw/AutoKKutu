@@ -11,9 +11,9 @@ class DriverWrapper:
             for key in value:
                 element.send_keys(key)
                 if random:
-                    time.sleep(randint(delay_min, delay_max) * 1000)
+                    time.sleep(randint(delay_min, delay_max)/1000)
                 else:
-                    time.sleep(delay_max * 1000)
+                    time.sleep(delay_max/1000)
 
 def return_append(origin, new):
     temp = deepcopy(origin)

@@ -140,8 +140,14 @@ def wait_loop():
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, static.OUTGAME_USERNAME_CSS_SELECTOR))
     )
-    username = driver.find_elements(By.CSS_SELECTOR, static.OUTGAME_USERNAME_CSS_SELECTOR)[0].text
-    log.info(f'Logged in as: {username}')
+    username = ""
+    while True:
+        username = driver.find_elements(By.CSS_SELECTOR, static.OUTGAME_USERNAME_CSS_SELECTOR)[0].text
+        if not username:
+            continue
+        log.info(f'Logged in as: {username}')
+        break
+    
     while True:
         if stylesplit(driver.find_element(By.ID, "GameBox").get_attribute('style'))['display'] == 'none':
             log.info('Game is not ready. Waiting..')

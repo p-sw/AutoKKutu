@@ -22,6 +22,7 @@ for _ in range(3):
         from selenium.webdriver.support import expected_conditions as EC
         from selenium.webdriver.chrome.service import Service
         from selenium.webdriver.common.keys import Keys
+        from selenium.common.exceptions import NoSuchElementException
         from webdriver_manager.chrome import ChromeDriverManager
         break
     except ImportError:
@@ -165,7 +166,10 @@ def game_loop(**kwargs):
     )
     # inputbox = driver.find_element(By.CSS_SELECTOR, static.GAME_CHAT_CSS_SELECTOR)
     while True:
-        current_turn_user = driver.find_element(By.CLASS_NAME, static.INGAME_USER_CURRENT_CSS_NAME)
+        try:
+            current_turn_user = driver.find_element(By.CLASS_NAME, static.INGAME_USER_CURRENT_CSS_NAME)
+        except NoSuchElementException:
+            continue
         turn_username = current_turn_user.find_element(By.CLASS_NAME, static.INGAME_USERNAME_CSS_NAME).text
         if turn_username == username:
             log.info('It is your turn.')

@@ -1,7 +1,7 @@
 from datetime import datetime
 import os
 
-os.system("color")
+os.system("") # init color system
 
 class LevelStyles():
     ## 1 if bold else 0;color
@@ -26,20 +26,28 @@ class Logger():
         os.fsync(self.log_file.fileno())
 
     def success(self, text):
-        self.write_log(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' (SUCCESS) ' + text)
-        print(f'{self.pref}{LevelStyles.success_color}' + text + self.reset)
+        nowtime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        format_str = f"{nowtime} (SUCCESS) : {text}"
+        self.write_log(format_str)
+        print(f'{self.pref}{LevelStyles.success_color}{format_str}{self.reset}')
 
     def info(self, text):
-        self.write_log(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' (INFO) ' + text)
-        print(f'{self.pref}{LevelStyles.info_color}' + text + self.reset)
+        nowtime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        format_str = f"{nowtime} (INFO) : {text}"
+        self.write_log(format_str)
+        print(f'{self.pref}{LevelStyles.info_color}{format_str}{self.reset}')
     
     def warning(self, text):
-        self.write_log(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' (WARNING) ' + text)
-        print(f'{self.pref}{LevelStyles.warning_color}' + text + self.reset)
+        nowtime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        format_str = f"{nowtime} (WARNING) : {text}"
+        self.write_log(format_str)
+        print(f'{self.pref}{LevelStyles.warning_color}{format_str}{self.reset}')
     
     def error(self, text):
-        self.write_log(datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' (ERROR) ' + text)
-        print(f'{self.pref}{LevelStyles.error_color}' + text + self.reset)
+        nowtime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        format_str = f"{nowtime} (ERROR) : {text}"
+        self.write_log(format_str)
+        print(f'{self.pref}{LevelStyles.error_color}{format_str}{self.reset}')
 
 if __name__ == "__main__":
     logger = Logger()

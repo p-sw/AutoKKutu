@@ -5,6 +5,10 @@ from lib.logger import Logger
 from lib.utils import DriverWrapper
 log = Logger()
 
+from configs.ConfigLoader import Config, Statics
+config = Config(log)
+static = Statics()
+
 for _ in range(3):
     try:
         import pyperclip
@@ -26,8 +30,7 @@ for _ in range(3):
         log.info('Retrying imports..')
 log.success('Successfully imported all modules.')
 
-
-initial = "https://kkutu.co.kr/o/login/"
+entry = static.ENTRY_POINT
 current_account = None
 
 with open("account.cfg", "r", encoding="utf-8") as f:
@@ -42,7 +45,7 @@ for account in accountConfig:
     if not account["use"]:
         continue
     current_account = account
-    initial += account["method"]
+    entry += account["method"]
 
 if not current_account:
     log.error("No account is available. If you want to use account, please set use to true.")
@@ -55,7 +58,7 @@ options.add_experimental_option('excludeSwitches', ['enable-logging'])
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 driver_wrapper = DriverWrapper(driver)
 
-driver.get(initial)
+driver.get(entry)
 
 match current_account['method']:
     case "facebook":
@@ -111,4 +114,4 @@ log.info('Successfully logged in.')
 WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.ID, "kkuko"))
 )
-driver.get(f"https://kkutu.co.kr/o/game?server={globalConfig['game']['server']}")
+driver.get(f"{static.GAME_MAIN_ENTRY_POINT}{globalConfig['game']['server']}")

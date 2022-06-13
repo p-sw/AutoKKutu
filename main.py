@@ -4,7 +4,10 @@ import time
 
 from lib.logger import Logger
 from lib.utils import DriverWrapper, stylesplit
+from lib import dbm  # prevent from conflict with selenium By
+from lib.dbm import DBManager
 log = Logger()
+db = DBManager()
 
 from configs.ConfigLoader import Config, Statics
 config = Config(log)
@@ -160,11 +163,20 @@ def game_loop(**kwargs):
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CLASS_NAME, static.INGAME_USER_CSS_NAME))
     )
-    users = driver.find_elements(By.CLASS_NAME, static.INGAME_USER_CSS_NAME)
+    # inputbox = driver.find_element(By.CSS_SELECTOR, static.GAME_CHAT_CSS_SELECTOR)
     while True:
-        for user in users:
-            local_username = user.find_element(By.CLASS_NAME, static.INGAME_USERNAME_CSS_NAME)
-            print("Detected local username: "+local_username.text)
+        current_turn_user = driver.find_element(By.CLASS_NAME, static.INGAME_USER_CURRENT_CSS_NAME)
+        turn_username = current_turn_user.find_element(By.CLASS_NAME, static.INGAME_USERNAME_CSS_NAME).text
+        if turn_username == username:
+            log.info('It is your turn.')
+            current_fchar = driver.find_element(By.CLASS_NAME, static.GAME_WORD_DISPLAY_CSS_NAME).text
+            if len(current_fchar) != 1:
+                continue
+            log.info(f'Current word: {current_fchar}')
+            recomm_word = db.get_word(dbm.By.HIGH_LENGTH, current_fchar, [])[0]
+            log.info(f'Recommending word: {recomm_word}')
+        else:
+            log.info(f'It is {turn_username} turn.')
 
 # ***************** #
 wait_loop()

@@ -22,8 +22,8 @@ class Statics: # DO NOT EDIT THIS VALUES
 class Config:
     default_form = {
         'typing': {
-            'delay_min': float,
-            'delay_max': float,
+            'delay_min': int,
+            'delay_max': int,
             'delay_random': bool
         }
     }

@@ -23,3 +23,8 @@ class DBManager:
             except ValueError:
                 pass  # ignore if value is not exists in matched words
         return match_words
+    
+    def insert_word(self, word):
+        cursor = self.db.cursor()
+        cursor.execute('INSERT OR IGNORE INTO stdict VALUES (?, ?)', (word, len(word)))
+        self.db.commit()

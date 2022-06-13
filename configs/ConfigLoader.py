@@ -8,7 +8,8 @@ except ImportError:
 
 
 class Statics: # DO NOT EDIT THIS VALUES
-    initial = '1'
+    ENTRY_POINT = 'https://kkutu.co.kr/o/login/'
+    GAME_MAIN_ENTRY_POINT = 'https://kkutu.co.kr/o/game?server='
 
 
 class Config:

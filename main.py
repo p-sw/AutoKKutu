@@ -1,8 +1,9 @@
 import json
 import sys
+import time
 
 from lib.logger import Logger
-from lib.utils import DriverWrapper
+from lib.utils import DriverWrapper, stylesplit
 log = Logger()
 
 from configs.ConfigLoader import Config, Statics
@@ -134,3 +135,33 @@ WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.ID, "kkuko"))
 )
 driver.get(f"{static.GAME_MAIN_ENTRY_POINT}{globalConfig['game']['server']}")
+
+# *** Globals *** #
+
+username = ""
+
+# *************** #
+
+def wait_loop():
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, static.OUTGAME_USERNAME_CSS_SELECTOR))
+    )
+    username = driver.find_elements(By.CSS_SELECTOR, static.OUTGAME_USERNAME_CSS_SELECTOR)[0].text
+    log.info(f'Logged in as: {username}')
+    while True:
+        if stylesplit(driver.find_element(By.ID, "GameBox").get_attribute('style'))['display'] == 'none':
+            log.info('Game is not ready. Waiting..')
+            time.sleep(1)
+            continue
+        game_loop()
+
+def game_loop():
+#     global username
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, static.INGAME_USER_CSS_NAME))
+    )
+    users = driver.find_elements(By.CLASS_NAME, static.INGAME_USER_CSS_NAME)
+    while True:
+        for user in users:
+            local_username = user.find_element(By.CLASS_NAME, static.INGAME_USERNAME_CSS_NAME)
+            print("Detected local username: "+local_username.text)

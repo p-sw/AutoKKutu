@@ -165,6 +165,7 @@ def game_loop(**kwargs):
         EC.presence_of_element_located((By.CLASS_NAME, static.INGAME_USER_CSS_NAME))
     )
     # inputbox = driver.find_element(By.CSS_SELECTOR, static.GAME_CHAT_CSS_SELECTOR)
+    history = []
     while True:
         try:
             current_turn_user = driver.find_element(By.CLASS_NAME, static.INGAME_USER_CURRENT_CSS_NAME)
@@ -172,15 +173,22 @@ def game_loop(**kwargs):
             continue
         turn_username = current_turn_user.find_element(By.CLASS_NAME, static.INGAME_USERNAME_CSS_NAME).text
         if turn_username == username:
-            log.info('It is your turn.')
             current_fchar = driver.find_element(By.CLASS_NAME, static.GAME_WORD_DISPLAY_CSS_NAME).text
             if len(current_fchar) != 1:
                 continue
-            log.info(f'Current word: {current_fchar}')
-            recomm_word = db.get_word(dbm.By.HIGH_LENGTH, current_fchar, [])[0]
-            log.info(f'Recommending word: {recomm_word}')
+            recomm_word = db.get_word(dbm.By.HIGH_LENGTH, current_fchar, history)[0]
+            
         else:
-            log.info(f'It is {turn_username} turn.')
+            pass
+        try:
+            first_history = driver.find_element(By.CLASS_NAME, static.INGAME_HISTORY_ITEM_CSS_NAME).get_attribute('innerHTML')
+        except NoSuchElementException:
+            continue
+        first_history = first_history.replace('\t', '').replace('\n', '').replace(' ', '').replace('"', '')
+        history_text = first_history[:first_history.find('<')]
+        if history_text not in history:
+            history.append(history_text)
+            db.insert_word(history_text)
 
 # ***************** #
 wait_loop()

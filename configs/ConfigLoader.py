@@ -51,7 +51,7 @@ class Config:
             }
 
         self.log.success('Configs successfully loaded.')
-        for key, value in flatdict(self.config):
+        for key, value in flatdict(self.config).items():
             self.log.info(f'{key}\t:\t{value}')
 
     def get(self, dictpath: str = None):

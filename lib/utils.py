@@ -45,3 +45,11 @@ def flatdict(target, parentpath:list=None) -> dict:
             print(key, value, parentpath)
             addline(value, return_append(parentpath, key))
     return result
+
+def stylesplit(style):
+    result = {}
+    for line in style.split(';'):
+        if ':' in line:
+            key, value = line.split(':')
+            result[key.strip()] = value.strip()
+    return result

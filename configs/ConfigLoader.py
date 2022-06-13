@@ -12,6 +12,7 @@ class Statics: # DO NOT EDIT THIS VALUES
     GAME_MAIN_ENTRY_POINT = 'https://kkutu.co.kr/o/game?server='
     OUTGAME_USERNAME_CSS_SELECTOR = '#MeBox div.product-body div.my-stat .my-stat-name.ellipse'
     INGAME_USER_CSS_NAME = 'game-user'
+    INGAME_USER_CURRENT_CSS_NAME = 'game-user-current'
     INGAME_USERNAME_CSS_NAME = 'game-user-name'
 
 

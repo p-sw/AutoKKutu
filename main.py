@@ -147,7 +147,7 @@ def wait_loop():
             continue
         log.info(f'Logged in as: {username}')
         break
-    
+
     while True:
         if stylesplit(driver.find_element(By.ID, "GameBox").get_attribute('style'))['display'] == 'none':
             log.info('Game is not ready. Waiting..')
@@ -165,3 +165,6 @@ def game_loop(**kwargs):
         for user in users:
             local_username = user.find_element(By.CLASS_NAME, static.INGAME_USERNAME_CSS_NAME)
             print("Detected local username: "+local_username.text)
+
+# ***************** #
+wait_loop()

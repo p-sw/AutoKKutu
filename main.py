@@ -164,7 +164,7 @@ def game_loop(**kwargs):
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CLASS_NAME, static.INGAME_USER_CSS_NAME))
     )
-    # inputbox = driver.find_element(By.CSS_SELECTOR, static.GAME_CHAT_CSS_SELECTOR)
+    inputbox = driver.find_element(By.CSS_SELECTOR, static.GAME_CHAT_CSS_SELECTOR)
     history = []
     while True:
         try:
@@ -177,7 +177,14 @@ def game_loop(**kwargs):
             if len(current_fchar) != 1:
                 continue
             recomm_word = db.get_word(dbm.By.HIGH_LENGTH, current_fchar, history)[0]
-            
+            driver_wrapper.send_keys_delay(inputbox, 
+                                           recomm_word, 
+                                           random=config.get('typing.delay_random'),
+                                           delay_min=config.get('typing.delay_min'),
+                                           delay_max=config.get('typing.delay_max')
+            )
+            if stylesplit(driver.find_element(By.ID, "GameBox").get_attribute('style'))['display'] != 'none':
+                inputbox.send_keys(Keys.ENTER)
         else:
             pass
         try:

@@ -176,7 +176,11 @@ def game_loop(**kwargs):
             current_fchar = driver.find_element(By.CLASS_NAME, static.GAME_WORD_DISPLAY_CSS_NAME).text
             if len(current_fchar) != 1:
                 continue
-            recomm_word = db.get_word(dbm.By.HIGH_LENGTH, current_fchar, history)[0]
+            try:
+                recomm_word = db.get_word(dbm.By.HIGH_LENGTH, current_fchar, history)[0]
+            except IndexError:
+                log.warning('단어를 찾지 못했습니다.')
+                log.warning('한방단어 혹은 단어를 모두 사용했을 수 있습니다.')
             driver_wrapper.send_keys_delay(inputbox, 
                                            recomm_word, 
                                            random=config.get('typing.delay_random'),

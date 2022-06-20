@@ -30,7 +30,7 @@ class Config:
 
     def __init__(self, log: Logger):
         self.log = log
-        self.log.info('Loading configs...')
+        self.log.info('로컬 설정 불러오는 중...')
 
         if path.exists('config.json'):
 
@@ -54,7 +54,7 @@ class Config:
                 }
             }
 
-        self.log.success('Configs successfully loaded.')
+        self.log.success('모든 로컬 설정을 불러왔습니다.')
         for key, value in flatdict(self.config).items():
             self.log.info(f'{key}\t:\t{value}')
 

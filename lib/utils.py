@@ -55,6 +55,7 @@ def stylesplit(style):
     return result
 
 def quit_with_wait():
+    print("ENTER 키를 눌러 프로그램을 종료하세요.")
     while True:
         if keyboard.is_pressed("return"):
             break

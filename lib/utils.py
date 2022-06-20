@@ -1,6 +1,8 @@
 import time
 from random import randint
 from copy import deepcopy
+import sys
+
 import keyboard
 
 class DriverWrapper:
@@ -10,6 +12,8 @@ class DriverWrapper:
     def send_keys_delay(self, element, *values, delay_max=100, delay_min=50, random=True):
         for value in values:
             for key in value:
+                print(key)
+                print(values)
                 element.send_keys(key)
                 if random:
                     time.sleep(randint(delay_min, delay_max)/1000)

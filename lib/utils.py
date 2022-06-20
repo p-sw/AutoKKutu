@@ -9,11 +9,9 @@ class DriverWrapper:
     def __init__(self, driver_obj):
         self.driver = driver_obj
 
-    def send_keys_delay(self, element, *values, delay_max=100, delay_min=50, random=True):
+    def send_keys_delay(self, element, values, delay_max=100, delay_min=50, random=True):
         for value in values:
             for key in value:
-                print(key)
-                print(values)
                 element.send_keys(key)
                 if random:
                     time.sleep(randint(delay_min, delay_max)/1000)

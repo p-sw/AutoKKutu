@@ -26,25 +26,25 @@ for _ in range(3):
         from webdriver_manager.chrome import ChromeDriverManager
         break
     except ImportError:
-        log.warning('Required modules not found.')
-        log.info('Installing..')
+        log.warning('필요한 모듈을 찾을 수 없습니다.')
+        log.info('설치하는 중..')
         import pip
         pip.main(['install', '--disable-pip-version-check', 'wheel'])
         pip.main(['install', '--disable-pip-version-check', '-r', 'requirements.txt'])
-        log.success('Successfully installed all modules.')
-        log.info('Retrying imports..')
-log.success('Successfully imported all modules.')
+        log.success('모든 모듈을 성공적으로 설치했습니다.')
+        log.info('다시 시도하는 중..')
+log.success('모듈을 성공적으로 불러왔습니다.')
 
 entry = static.ENTRY_POINT
 current_account = None
 
 with open("account.cfg", "r", encoding="utf-8") as f:
     accountConfig = json.load(f)
-    log.success('Successfully loaded account config.')
+    log.success('계정 설정을 불러왔습니다.')
 
 with open("global.cfg", "r", encoding="utf-8") as f:
     globalConfig = json.load(f)
-    log.success('Successfully loaded global config.')
+    log.success('전역 설정을 불러왔습니다.')
 
 for account in accountConfig:
     if not account["use"]:
@@ -53,13 +53,13 @@ for account in accountConfig:
     entry += account["method"]
 
 if not current_account:
-    log.error("No account is available. If you want to use account, please set use to true.")
+    log.error("계정이 설정되어 있지 않습니다. accounts.cfg 파일을 수정해 계정을 추가해 주세요.")
     sys.exit(1)
 
-log.info(f"""Using account:\n
-LOGIN_METHOD:{current_account['method']}\n
-ACCOUNT_ID:{current_account['account_info']['id']}\n
-ACCOUNT_PW:{current_account['account_info']['password']}""")
+log.info(f"""계정 정보:\n
+로그인 사이트:{current_account['method']}\n
+계정 아이디:{current_account['account_info']['id']}\n
+계정 비밀번호:{'*' * len(current_account['account_info']['password'])}""")
 
 options = webdriver.ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -70,7 +70,7 @@ driver.get(entry)
 
 match current_account['method']:
     case "facebook":
-        log.info('Using facebook login method.')
+        log.info('페이스북 로그인을 시도합니다.')
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "email"))
         )
@@ -82,7 +82,7 @@ match current_account['method']:
         )
         driver.find_element(By.ID, "loginbutton").click()
     case "naver":
-        log.info('Using naver login method.')
+        log.info('네이버 로그인을 시도합니다.')
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "id"))
         )
@@ -107,10 +107,10 @@ match current_account['method']:
         # current_account['account_info']['password']
         # )
         # driver.find_element(By.ID, "passwordNext").click()
-        log.error('Google login method is not supported.')
+        log.error('구글 계정 로그인은 현재 지원하지 않습니다. 죄송합니다.')
         sys.exit(1)
     case "kakao":
-        log.info('Using kakao login method.')
+        log.info('카카오 로그인을 시도합니다.')
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "id_email_2"))
         )
@@ -122,7 +122,7 @@ match current_account['method']:
         )
         driver.find_element_by_xpath('//*[@id="login-form"]/fieldset/div[8]/button[1]').click()
     case "twitter":
-        log.info('Using twitter login method.')
+        log.info('트위터 로그인을 시도합니다.')
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "username_or_email"))
         )
@@ -133,7 +133,7 @@ match current_account['method']:
             driver.find_element(By.ID, "password"), current_account['account_info']['password']
         )
         driver.find_element(By.ID, "allow").click()
-log.info('Successfully logged in.')
+log.success('로그인 성공.')
 
 WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.ID, "kkuko"))
@@ -149,12 +149,12 @@ def wait_loop():
         username = driver.find_elements(By.CSS_SELECTOR, static.OUTGAME_USERNAME_CSS_SELECTOR)[0].text
         if not username:
             continue
-        log.info(f'Logged in as: {username}')
+        log.info(f'유저 닉네임: {username}')
         break
 
     while True:
         if stylesplit(driver.find_element(By.ID, "GameBox").get_attribute('style'))['display'] == 'none':
-            log.info('Game is not ready. Waiting..')
+            log.info('게임 대기중..')
             time.sleep(1)
             continue
         game_loop(username=username)

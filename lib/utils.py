@@ -1,6 +1,7 @@
 import time
 from random import randint
 from copy import deepcopy
+import keyboard
 
 class DriverWrapper:
     def __init__(self, driver_obj):
@@ -52,3 +53,9 @@ def stylesplit(style):
             key, value = line.split(':')
             result[key.strip()] = value.strip()
     return result
+
+def quit_with_wait():
+    while True:
+        if keyboard.is_pressed("return"):
+            break
+    sys.exit(1)

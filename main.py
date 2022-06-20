@@ -2,10 +2,22 @@ import json
 import sys
 import time
 
-from lib.logger import Logger
-from lib.utils import DriverWrapper, stylesplit
-from lib import dbm  # prevent from conflict with selenium By
-from lib.dbm import DBManager
+for _ in range(3):
+    try:
+        from lib.logger import Logger
+        from lib.utils import DriverWrapper, stylesplit, quit_with_wait
+        from lib import dbm  # prevent from conflict with selenium By
+        from lib.dbm import DBManager
+        break
+    except ImportError:
+        log.warning('필요한 모듈을 찾을 수 없습니다.')
+        log.info('설치하는 중..')
+        import pip
+        pip.main(['install', '--disable-pip-version-check', 'wheel'])
+        pip.main(['install', '--disable-pip-version-check', '-r', 'requirements.txt'])
+        log.success('모든 모듈을 성공적으로 설치했습니다.')
+        log.info('다시 시도하는 중..')
+
 log = Logger()
 db = DBManager()
 
@@ -54,7 +66,7 @@ for account in accountConfig:
 
 if not current_account:
     log.error("계정이 설정되어 있지 않습니다. accounts.cfg 파일을 수정해 계정을 추가해 주세요.")
-    sys.exit(1)
+    quit_with_wait()
 
 log.info(f"""계정 정보:\n
 로그인 사이트:{current_account['method']}\n
@@ -108,7 +120,7 @@ match current_account['method']:
         # )
         # driver.find_element(By.ID, "passwordNext").click()
         log.error('구글 계정 로그인은 현재 지원하지 않습니다. 죄송합니다.')
-        sys.exit(1)
+        quit_with_wait()
     case "kakao":
         log.info('카카오 로그인을 시도합니다.')
         WebDriverWait(driver, 10).until(

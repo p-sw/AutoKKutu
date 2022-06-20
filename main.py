@@ -50,11 +50,11 @@ log.success('모듈을 성공적으로 불러왔습니다.')
 entry = static.ENTRY_POINT
 current_account = None
 
-with open("account.cfg", "r", encoding="utf-8") as f:
+with open("localcfgs/account.cfg", "r", encoding="utf-8") as f:
     accountConfig = json.load(f)
     log.success('계정 설정을 불러왔습니다.')
 
-with open("global.cfg", "r", encoding="utf-8") as f:
+with open("localcfgs/global.cfg", "r", encoding="utf-8") as f:
     globalConfig = json.load(f)
     log.success('전역 설정을 불러왔습니다.')
 

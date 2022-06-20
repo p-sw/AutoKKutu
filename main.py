@@ -193,6 +193,8 @@ def game_loop(**kwargs):
             except IndexError:
                 log.warning('단어를 찾지 못했습니다.')
                 log.warning('한방단어 혹은 단어를 모두 사용했을 수 있습니다.')
+                time.sleep(1)
+                continue
             driver_wrapper.send_keys_delay(inputbox, 
                                            recomm_word, 
                                            random=config.get('typing.delay_random'),

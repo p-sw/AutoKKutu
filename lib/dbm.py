@@ -19,7 +19,7 @@ class DBManager:
         match_words = cursor.execute(sql).fetchall()
         for dup_word in dups:
             try:
-                match_words.remove((dup_word, len(dup_word)))
+                match_words.remove((dup_word))
             except ValueError:
                 pass  # ignore if value is not exists in matched words
         return match_words
